@@ -373,7 +373,9 @@ export default function EnhancedSkillsManagementDashboard() {
                           </DialogTrigger>
                           <DialogContent className="max-w-3xl">
                             <DialogHeader>
-                              <DialogTitle>{user.name}'s QA Skills</DialogTitle>
+                              <DialogTitle>
+                                {user.name}&apos;s QA Skills
+                              </DialogTitle>
                               <DialogDescription>
                                 Skill levels and proficiencies in QA domains
                               </DialogDescription>

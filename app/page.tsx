@@ -645,7 +645,9 @@ export default function Component() {
                           </DialogTrigger>
                           <DialogContent className="max-w-3xl">
                             <DialogHeader>
-                              <DialogTitle>{user.name}'s Skills</DialogTitle>
+                              <DialogTitle>
+                                {user.name}&apos;s Skills
+                              </DialogTitle>
                               <DialogDescription>
                                 Skill levels and proficiencies
                               </DialogDescription>
