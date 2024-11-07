@@ -1,10 +1,16 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+
+# pnpm specific
+.pnpm-store/
+.pnpm-debug.log*
+.pnpm-error.log*
+.pnpm-store.LOCK
+.pnpm-workspace.yaml
+# .pnpm-lock.yaml  # You might want to commit this file
 
 # testing
 /coverage
@@ -15,6 +21,75 @@
 
 # production
 /build
+/dist
+/.swc/
+
+# Sass
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
+# Less
+*.less.map
+
+# Stylus
+*.styl.map
+
+# CSS
+*.css.map
+
+# PostCSS
+.postcssrc
+.postcss-cache/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+tsconfig.tsbuildinfo
+.tsc/
+*.js.map
+
+# Babel
+.babel-cache/
+.babel.json
+.babelrc.json
+.babelrc.js
+babel.config.js
+
+# Webpack
+/webpack-stats.json
+.webpack/
+*.hot-update.json
+*.hot-update.js
+
+# Rollup
+.rollup.cache/
+/dist/
+
+# Vite
+/vite.config.ts.timestamp-*
+.vite/
+
+# ESLint
+.eslintcache
+.eslintrc
+.eslintrc.*
+
+# Prettier
+.prettierrc
+.prettierrc.*
+.prettier.config.js
+.prettier.config.cjs
+
+# Stylelint
+.stylelintcache
+.stylelintrc
+.stylelintrc.*
+
+# SWC (Rust-based compiler)
+.swc/
+.swcrc
 
 # misc
 .DS_Store
@@ -24,13 +99,153 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
 # local env files
 .env*.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# PWA
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+
+# Storybook
+storybook-static/
+.storybook-out/
+*.stories.d.ts
+
+# Jest
+/coverage/
+.jest/
+jest.config.js
+jest.setup.js
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress.env.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Bundle analyzer
+/analyze/
+.analyze/
+bundle-stats.json
+
+# Framework specific
+.nuxt/
+.output/
+.svelte-kit/
+.angular/
+
+# Cache folders
+.cache/
+.next/cache/
+.parcel-cache/
+
+# IDE specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-*
+.netbeans
+nbproject/
+.project
+.settings/
+*.tmproj
+*.esproj
+.vs/
+
+# OS specific
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+tmp/
+temp/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variable files
+.env*
+
+# Serverless directories
+.serverless/
+
+# Turbo (if using Turborepo)
+.turbo
