@@ -1,13 +1,22 @@
-"use client"
+"use client";
 
-import React, { useState, useMemo } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useState, useMemo } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 // Helper functions for different calculation methods
 const calculateWeightedScore = (selfScore, managerScore) => {
   // 50/50 weight between self and manager scores
-  return (selfScore * 0.5) + (managerScore * 0.5);
+  return selfScore * 0.5 + managerScore * 0.5;
 };
 
 const calculateAverageScore = (selfScore, managerScore) => {
@@ -18,24 +27,24 @@ const calculateAverageScore = (selfScore, managerScore) => {
 // Get required level based on career level
 const getRequiredLevel = (careerLevel) => {
   const levelMap = {
-    'Professional I': 1,
-    'Professional II': 2,
-    'Professional III': 3,
-    'Professional IV': 4,
-    'Manager I': 4,
-    'Manager II': 5,
-    'Manager III': 5,
-    'Manager IV': 5,
-    'Director I': 6,
-    'Director II': 6,
-    'Director III': 6,
-    'Director IV': 6
+    "Professional I": 1,
+    "Professional II": 2,
+    "Professional III": 3,
+    "Professional IV": 4,
+    "Manager I": 4,
+    "Manager II": 5,
+    "Manager III": 5,
+    "Manager IV": 5,
+    "Director I": 6,
+    "Director II": 6,
+    "Director III": 6,
+    "Director IV": 6,
   };
   return levelMap[careerLevel] || 0;
 };
 
 const SkillsGapAnalysis = () => {
-  const [calculationType, setCalculationType] = useState('average'); // or 'weighted'
+  const [calculationType, setCalculationType] = useState("average"); // or 'weighted'
 
   // Example employee data
   const [selectedEmployee, setSelectedEmployee] = useState({
@@ -45,16 +54,16 @@ const SkillsGapAnalysis = () => {
       "Problem Solving": 3,
       "Creative Thinking": 2,
       "Decision Making": 3,
-      "Communication": 3,
-      "Software Testing": 4
+      Communication: 3,
+      "Software Testing": 4,
     },
     managerAssessment: {
       "Problem Solving": 2,
       "Creative Thinking": 2,
       "Decision Making": 2,
-      "Communication": 3,
-      "Software Testing": 3
-    }
+      Communication: 3,
+      "Software Testing": 3,
+    },
   });
 
   // Calculate gaps using selected method
@@ -62,14 +71,15 @@ const SkillsGapAnalysis = () => {
     const skills = Object.keys(selectedEmployee.selfAssessment);
     const requiredLevel = getRequiredLevel(selectedEmployee.careerLevel);
 
-    return skills.map(skill => {
+    return skills.map((skill) => {
       const selfScore = selectedEmployee.selfAssessment[skill];
       const managerScore = selectedEmployee.managerAssessment[skill];
 
       // Calculate current level based on selected method
-      const currentLevel = calculationType === 'weighted'
-        ? calculateWeightedScore(selfScore, managerScore)
-        : calculateAverageScore(selfScore, managerScore);
+      const currentLevel =
+        calculationType === "weighted"
+          ? calculateWeightedScore(selfScore, managerScore)
+          : calculateAverageScore(selfScore, managerScore);
 
       const gap = requiredLevel - currentLevel;
 
@@ -79,17 +89,17 @@ const SkillsGapAnalysis = () => {
         managerScore,
         currentLevel: parseFloat(currentLevel.toFixed(1)),
         requiredLevel,
-        gap: parseFloat(gap.toFixed(1))
+        gap: parseFloat(gap.toFixed(1)),
       };
     });
   }, [selectedEmployee, calculationType]);
 
   // Prepare data for visualization
-  const chartData = gapAnalysis.map(item => ({
+  const chartData = gapAnalysis.map((item) => ({
     skill: item.skill,
     Current: item.currentLevel,
     Required: item.requiredLevel,
-    Gap: Math.max(0, item.gap)
+    Gap: Math.max(0, item.gap),
   }));
 
   return (
@@ -110,16 +120,22 @@ const SkillsGapAnalysis = () => {
         </CardHeader>
         <CardContent>
           <div className="mb-4">
-            <p className="text-sm text-gray-500">Career Level: {selectedEmployee.careerLevel}</p>
             <p className="text-sm text-gray-500">
-              Calculation Method: {calculationType === 'weighted' ? '50/50 Weighted' : 'Average'}
+              Career Level: {selectedEmployee.careerLevel}
+            </p>
+            <p className="text-sm text-gray-500">
+              Calculation Method:{" "}
+              {calculationType === "weighted" ? "50/50 Weighted" : "Average"}
             </p>
           </div>
 
           {/* Skills Gap Chart */}
           <div className="h-96 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <BarChart
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="skill" />
                 <YAxis />
@@ -155,7 +171,9 @@ const SkillsGapAnalysis = () => {
                       <td className="p-2 text-right">{item.managerScore}</td>
                       <td className="p-2 text-right">{item.currentLevel}</td>
                       <td className="p-2 text-right">{item.requiredLevel}</td>
-                      <td className={`p-2 text-right ${item.gap > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                      <td
+                        className={`p-2 text-right ${item.gap > 0 ? "text-red-500" : "text-green-500"}`}
+                      >
                         {item.gap > 0 ? `+${item.gap}` : item.gap}
                       </td>
                     </tr>
@@ -172,25 +190,32 @@ const SkillsGapAnalysis = () => {
               <div className="p-4 bg-gray-50 rounded">
                 <div className="text-sm text-gray-500">Average Gap</div>
                 <div className="text-xl font-semibold">
-                  {(gapAnalysis.reduce((acc, item) => acc + item.gap, 0) / gapAnalysis.length).toFixed(2)}
+                  {(
+                    gapAnalysis.reduce((acc, item) => acc + item.gap, 0) /
+                    gapAnalysis.length
+                  ).toFixed(2)}
                 </div>
               </div>
               <div className="p-4 bg-gray-50 rounded">
-                <div className="text-sm text-gray-500">Skills Meeting Required</div>
+                <div className="text-sm text-gray-500">
+                  Skills Meeting Required
+                </div>
                 <div className="text-xl font-semibold">
-                  {gapAnalysis.filter(item => item.gap <= 0).length}
+                  {gapAnalysis.filter((item) => item.gap <= 0).length}
                 </div>
               </div>
               <div className="p-4 bg-gray-50 rounded">
-                <div className="text-sm text-gray-500">Skills Needing Improvement</div>
+                <div className="text-sm text-gray-500">
+                  Skills Needing Improvement
+                </div>
                 <div className="text-xl font-semibold">
-                  {gapAnalysis.filter(item => item.gap > 0).length}
+                  {gapAnalysis.filter((item) => item.gap > 0).length}
                 </div>
               </div>
               <div className="p-4 bg-gray-50 rounded">
                 <div className="text-sm text-gray-500">Largest Gap</div>
                 <div className="text-xl font-semibold">
-                  {Math.max(...gapAnalysis.map(item => item.gap))}
+                  {Math.max(...gapAnalysis.map((item) => item.gap))}
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import React, { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const LearningRecommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
@@ -11,18 +11,18 @@ const LearningRecommendations = () => {
   const getRecommendedCoursesForLevel = (currentLevel, careerLevel) => {
     // Career level progression rules
     const levelRules = {
-      'Professional I': { max: 2, range: '0-1' },
-      'Professional II': { max: 3, range: '1-2' },
-      'Professional III': { max: 4, range: '2-3' },
-      'Professional IV': { max: 5, range: '3-4' },
-      'Manager I': { max: 5, range: '3-4' },
-      'Manager II': { max: 6, range: '4-5' },
-      'Manager III': { max: 6, range: '4-5' },
-      'Manager IV': { max: 6, range: '4-5' },
-      'Director I': { max: 6, range: '5-6' },
-      'Director II': { max: 6, range: '5-6' },
-      'Director III': { max: 6, range: '5-6' },
-      'Director IV': { max: 6, range: '5-6' }
+      "Professional I": { max: 2, range: "0-1" },
+      "Professional II": { max: 3, range: "1-2" },
+      "Professional III": { max: 4, range: "2-3" },
+      "Professional IV": { max: 5, range: "3-4" },
+      "Manager I": { max: 5, range: "3-4" },
+      "Manager II": { max: 6, range: "4-5" },
+      "Manager III": { max: 6, range: "4-5" },
+      "Manager IV": { max: 6, range: "4-5" },
+      "Director I": { max: 6, range: "5-6" },
+      "Director II": { max: 6, range: "5-6" },
+      "Director III": { max: 6, range: "5-6" },
+      "Director IV": { max: 6, range: "5-6" },
     };
 
     return currentLevel < levelRules[careerLevel].max;
@@ -31,29 +31,30 @@ const LearningRecommendations = () => {
   // Example data
   const exampleEmployeeData = {
     name: "John Doe",
-    careerLevel: "Professional II",  // Employee's career level
+    careerLevel: "Professional II", // Employee's career level
     currentLevels: {
-      "Software Testing": 1.5,       // Current skill level
+      "Software Testing": 1.5, // Current skill level
       "Test Planning": 1.8,
-      "Quality Engineering": 1.2
-    }
+      "Quality Engineering": 1.2,
+    },
   };
 
   const exampleLearningResources = [
     {
       skillName: "Software Testing",
-      requiredLevel: 3,              // Target level for Professional II
+      requiredLevel: 3, // Target level for Professional II
       careerLevel: "Professional II",
       courseName: "ISTQB Foundation Level Testing",
       provider: "ISTQB",
       duration: "6 weeks",
       format: "Online Course",
       prerequisites: "None",
-      learningObjectives: "Testing fundamentals,Test case design,Test execution,Defect management",
+      learningObjectives:
+        "Testing fundamentals,Test case design,Test execution,Defect management",
       certificationOption: "ISTQB Foundation",
       businessValue: "Core QA capability",
-      recommendedFor: "Current Level < 3"  // Professional II course
-    }
+      recommendedFor: "Current Level < 3", // Professional II course
+    },
     // ... more courses
   ];
 
@@ -63,36 +64,41 @@ const LearningRecommendations = () => {
       try {
         // Filter and process courses
         const processed = exampleLearningResources
-          .filter(resource => {
-            const currentLevel = exampleEmployeeData.currentLevels[resource.skillName] || 0;
+          .filter((resource) => {
+            const currentLevel =
+              exampleEmployeeData.currentLevels[resource.skillName] || 0;
             return (
               // Match career level
               resource.careerLevel === exampleEmployeeData.careerLevel &&
               // Check if course is appropriate for current skill level
-              getRecommendedCoursesForLevel(currentLevel, exampleEmployeeData.careerLevel)
+              getRecommendedCoursesForLevel(
+                currentLevel,
+                exampleEmployeeData.careerLevel,
+              )
             );
           })
-          .map(resource => {
-            const currentLevel = exampleEmployeeData.currentLevels[resource.skillName] || 0;
+          .map((resource) => {
+            const currentLevel =
+              exampleEmployeeData.currentLevels[resource.skillName] || 0;
             const gap = resource.requiredLevel - currentLevel;
 
             return {
               skill: resource.skillName,
               gap: Number(gap.toFixed(1)),
-              priority: gap >= 2 ? 'Critical' : gap >= 1 ? 'High' : 'Medium',
+              priority: gap >= 2 ? "Critical" : gap >= 1 ? "High" : "Medium",
               course: {
                 name: resource.courseName,
                 provider: resource.provider,
                 duration: resource.duration,
                 format: resource.format,
                 certification: resource.certificationOption,
-                objectives: resource.learningObjectives.split(','),
+                objectives: resource.learningObjectives.split(","),
                 prerequisites: resource.prerequisites,
                 businessValue: resource.businessValue,
-                targetLevel: resource.requiredLevel
+                targetLevel: resource.requiredLevel,
               },
               currentLevel,
-              requiredLevel: resource.requiredLevel
+              requiredLevel: resource.requiredLevel,
             };
           })
           .sort((a, b) => b.gap - a.gap);
@@ -110,17 +116,24 @@ const LearningRecommendations = () => {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'Critical': return 'bg-red-100 text-red-800';
-      case 'High': return 'bg-orange-100 text-orange-800';
-      default: return 'bg-blue-100 text-blue-800';
+      case "Critical":
+        return "bg-red-100 text-red-800";
+      case "High":
+        return "bg-orange-100 text-orange-800";
+      default:
+        return "bg-blue-100 text-blue-800";
     }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Learning Recommendations for {exampleEmployeeData.name}</CardTitle>
-        <p className="text-sm text-gray-500">Career Level: {exampleEmployeeData.careerLevel}</p>
+        <CardTitle>
+          Learning Recommendations for {exampleEmployeeData.name}
+        </CardTitle>
+        <p className="text-sm text-gray-500">
+          Career Level: {exampleEmployeeData.careerLevel}
+        </p>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -137,7 +150,9 @@ const LearningRecommendations = () => {
               <Card key={index} className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-semibold text-lg">{reco.skill}</h3>
-                  <span className={`px-2 py-1 rounded ${getPriorityColor(reco.priority)}`}>
+                  <span
+                    className={`px-2 py-1 rounded ${getPriorityColor(reco.priority)}`}
+                  >
                     Gap: {reco.gap}
                   </span>
                 </div>
@@ -147,16 +162,20 @@ const LearningRecommendations = () => {
                     <p className="font-medium text-lg">{reco.course.name}</p>
                     <div className="grid grid-cols-2 gap-2 text-sm mt-2">
                       <div>
-                        <span className="text-gray-500">Current Level:</span> {reco.currentLevel}
+                        <span className="text-gray-500">Current Level:</span>{" "}
+                        {reco.currentLevel}
                       </div>
                       <div>
-                        <span className="text-gray-500">Target Level:</span> {reco.course.targetLevel}
+                        <span className="text-gray-500">Target Level:</span>{" "}
+                        {reco.course.targetLevel}
                       </div>
                       <div>
-                        <span className="text-gray-500">Provider:</span> {reco.course.provider}
+                        <span className="text-gray-500">Provider:</span>{" "}
+                        {reco.course.provider}
                       </div>
                       <div>
-                        <span className="text-gray-500">Duration:</span> {reco.course.duration}
+                        <span className="text-gray-500">Duration:</span>{" "}
+                        {reco.course.duration}
                       </div>
                     </div>
                   </div>
@@ -164,8 +183,10 @@ const LearningRecommendations = () => {
                   <div>
                     <h4 className="font-medium mb-2">Learning Path:</h4>
                     <div className="text-sm text-gray-600">
-                      This course will help you progress from level {reco.currentLevel} to level {reco.course.targetLevel},
-                      which is appropriate for your {exampleEmployeeData.careerLevel} career level.
+                      This course will help you progress from level{" "}
+                      {reco.currentLevel} to level {reco.course.targetLevel},
+                      which is appropriate for your{" "}
+                      {exampleEmployeeData.careerLevel} career level.
                     </div>
                   </div>
 
