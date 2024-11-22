@@ -62,6 +62,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
+import { TSCManager } from "./TSCManager";
 
 // Business Units Data
 const BUSINESS_UNITS = {
@@ -73,6 +74,7 @@ const BUSINESS_UNITS = {
   SEC: "Cybersecurity",
 };
 
+type BusinessUnit = keyof typeof BUSINESS_UNITS
 // Mock data structures
 const SKILLS = {
   QA: [
@@ -295,7 +297,7 @@ const DEPARTMENTS = [
 
 export default function Component() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBusinessUnit, setSelectedBusinessUnit] = useState("ALL");
+  const [selectedBusinessUnit, setSelectedBusinessUnit] = useState<BusinessUnit>("ALL");
   const [filteredUsers, setFilteredUsers] = useState(USERS);
   const [filteredDepartments, setFilteredDepartments] = useState(DEPARTMENTS);
   const [editingSkill, setEditingSkill] = useState(null);
@@ -361,7 +363,7 @@ export default function Component() {
         (acc, user) =>
           acc +
           user.skills.reduce((sum, skill) => sum + skill.level, 0) /
-            user.skills.length,
+          user.skills.length,
         0,
       ) / USERS.length
     ).toFixed(1);
@@ -420,11 +422,11 @@ export default function Component() {
                   <Badge>
                     {
                       skillLevels[
-                        Math.round(
-                          (skill.averageAssessment.manager +
-                            skill.averageAssessment.self) /
-                            2,
-                        )
+                      Math.round(
+                        (skill.averageAssessment.manager +
+                          skill.averageAssessment.self) /
+                        2,
+                      )
                       ]
                     }
                   </Badge>
@@ -518,7 +520,7 @@ export default function Component() {
           <div className="flex items-center space-x-4">
             <Select
               value={selectedBusinessUnit}
-              onValueChange={setSelectedBusinessUnit}
+              onValueChange={(value: string) => setSelectedBusinessUnit(value as BusinessUnit)}
             >
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select Business Unit">
@@ -588,6 +590,10 @@ export default function Component() {
             <TabsTrigger value="learning" className="flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
               Learning
+            </TabsTrigger>
+            <TabsTrigger value="taxonomy" className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              Taxonomy
             </TabsTrigger>
           </TabsList>
 
@@ -677,15 +683,15 @@ export default function Component() {
                                               {getSkillStatusIcon(
                                                 skill.level,
                                                 skillDetails?.requiredLevel ||
-                                                  0,
+                                                0,
                                               )}
                                             </TooltipTrigger>
                                             <TooltipContent>
                                               Required Level:{" "}
                                               {
                                                 skillLevels[
-                                                  skillDetails?.requiredLevel ||
-                                                    0
+                                                skillDetails?.requiredLevel ||
+                                                0
                                                 ]
                                               }
                                             </TooltipContent>
@@ -740,7 +746,7 @@ export default function Component() {
                 <div className="space-y-8">
                   {Object.entries(SKILLS).map(([businessUnit, skills]) =>
                     selectedBusinessUnit === "ALL" ||
-                    selectedBusinessUnit === businessUnit ? (
+                      selectedBusinessUnit === businessUnit ? (
                       <div key={businessUnit}>
                         <h3 className="text-lg font-semibold mb-4">
                           {BUSINESS_UNITS[businessUnit]}
@@ -797,7 +803,7 @@ export default function Component() {
                                             (s) => s.name === skill.skill,
                                           ),
                                         ).length) *
-                                        10,
+                                      10,
                                     ) / 10}
                                   </Badge>
                                 </div>
@@ -928,7 +934,7 @@ export default function Component() {
                           {Object.entries(SKILLS).map(
                             ([businessUnit, skills]) =>
                               selectedBusinessUnit === "ALL" ||
-                              selectedBusinessUnit === businessUnit ? (
+                                selectedBusinessUnit === businessUnit ? (
                                 <React.Fragment key={businessUnit}>
                                   <tr className="border-b bg-slate-100">
                                     <td colSpan={4} className="p-2 font-medium">
@@ -1089,7 +1095,7 @@ export default function Component() {
                   <div className="space-y-4">
                     {Object.entries(SKILLS).map(([businessUnit, skills]) =>
                       selectedBusinessUnit === "ALL" ||
-                      selectedBusinessUnit === businessUnit ? (
+                        selectedBusinessUnit === businessUnit ? (
                         <div key={businessUnit}>
                           <h3 className="text-md font-semibold mb-2">
                             {BUSINESS_UNITS[businessUnit]}
@@ -1180,7 +1186,7 @@ export default function Component() {
                   <div className="space-y-4">
                     {Object.entries(SKILLS).map(([businessUnit, skills]) =>
                       selectedBusinessUnit === "ALL" ||
-                      selectedBusinessUnit === businessUnit ? (
+                        selectedBusinessUnit === businessUnit ? (
                         <div key={businessUnit}>
                           <h3 className="text-md font-semibold mb-2">
                             {BUSINESS_UNITS[businessUnit]}
@@ -1234,7 +1240,7 @@ export default function Component() {
                   <div className="space-y-4">
                     {Object.entries(SKILLS).map(([businessUnit, skills]) =>
                       selectedBusinessUnit === "ALL" ||
-                      selectedBusinessUnit === businessUnit ? (
+                        selectedBusinessUnit === businessUnit ? (
                         <div key={businessUnit}>
                           <h3 className="text-md font-semibold mb-2">
                             {BUSINESS_UNITS[businessUnit]}
@@ -1595,6 +1601,9 @@ export default function Component() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+          <TabsContent value="taxonomy" className="mt-4">
+            <TSCManager selectedBusinessUnit={selectedBusinessUnit} />
           </TabsContent>
         </Tabs>
       </main>
