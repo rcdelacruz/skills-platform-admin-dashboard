@@ -63,6 +63,9 @@ import {
 } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { TSCManager } from "./TSCManager";
+import { ReportGenerator } from "./ReportGenerator"
+import { NotificationCenter } from "./NotificationCenter"
+import { UserDirectory } from "./UserDirectory"
 
 // Business Units Data
 const BUSINESS_UNITS = {
@@ -488,6 +491,8 @@ export default function Component() {
             <Badge variant="secondary">Data synced: Today 8:00 AM</Badge>
           </div>
           <div className="flex items-center space-x-4">
+            <ReportGenerator />
+            <NotificationCenter />
             <Button variant="ghost" size="icon">
               <Settings className="h-5 w-5" />
             </Button>
